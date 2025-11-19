@@ -1,0 +1,14 @@
+name = "willsparkmedia"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./"
+
+# Cloudflare Pages configuration
+# This file is optional for Cloudflare Pages deployment
+# but can be used if you need custom configurations
+
+# Build configuration is typically done in the Cloudflare Pages dashboard:
+# Build command: (leave empty for static sites)
+# Build output directory: /
+# Root directory: /

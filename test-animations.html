@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, #f8fafc 0%, #e8eef5 50%, #d6e4f5 100%);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.7;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.7) 0%, rgba(102, 126, 234, 0.4) 40%, transparent 70%);
+            top: -10%;
+            right: -5%;
+            animation: orbFloat1 15s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.7) 0%, rgba(240, 147, 251, 0.4) 40%, transparent 70%);
+            bottom: -10%;
+            left: -5%;
+            animation: orbFloat2 18s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.7) 0%, rgba(0, 242, 254, 0.4) 40%, transparent 70%);
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: orbFloat3 20s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-100px, 80px) scale(1.1); }
+            50% { transform: translate(-50px, -50px) scale(0.95); }
+            75% { transform: translate(80px, 50px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes orbFloat2 {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(90px, -60px) scale(1.08); }
+            50% { transform: translate(-80px, -40px) scale(0.92); }
+            75% { transform: translate(-50px, 90px) scale(1.03); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes orbFloat3 {
+            0% { transform: translate(-50%, 0) scale(1); }
+            25% { transform: translate(-50%, 70px) scale(1.12); }
+            50% { transform: translate(-50%, -80px) scale(0.88); }
+            75% { transform: translate(-50%, 40px) scale(1.06); }
+            100% { transform: translate(-50%, 0) scale(1); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #0F172A;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .line1 {
+            display: block;
+            animation: fadeSlideIn 1s ease-out 0.3s both;
+        }
+
+        .line2 {
+            display: block;
+            background: linear-gradient(135deg, #4169E1 0%, #FF6B9D 50%, #4169E1 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeSlideIn 1s ease-out 0.6s both, gradientShift 8s ease infinite;
+        }
+
+        @keyframes fadeSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: monospace;
+            z-index: 1000;
+        }
+
+        .orb-indicator {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .orb-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .orb-dot.blue { background: #4169E1; }
+        .orb-dot.pink { background: #FF6B9D; }
+        .orb-dot.cyan { background: #00f2fe; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status">
+        <div><strong>Animation Test</strong></div>
+        <div>Orbs should be moving:</div>
+        <div class="orb-indicator">
+            <div class="orb-dot blue"></div>
+            <div class="orb-dot pink"></div>
+            <div class="orb-dot cyan"></div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="content">
+            <h1>
+                <span class="line1">Spark Your</span>
+                <span class="line2">Digital Presence</span>
+            </h1>
+        </div>
+    </section>
+</body>
+</html>
