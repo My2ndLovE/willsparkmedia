@@ -255,13 +255,53 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // ===========================
-// Accessibility Enhancements
+// Content Protection
 // ===========================
-// Add keyboard navigation support
+// Disable right-click
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    return false;
+});
+
+// Disable text selection (but allow for form inputs)
+document.addEventListener('selectstart', (e) => {
+    if (!e.target.matches('input, textarea')) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Disable drag and drop for images
+document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// ===========================
+// Accessibility & Security Enhancements
+// ===========================
+// Unified keyboard event handler
 document.addEventListener('keydown', (e) => {
+    // Escape key - close mobile menu
     if (e.key === 'Escape' && navMenu.classList.contains('active')) {
         navMenu.classList.remove('active');
         menuToggle.classList.remove('active');
+    }
+
+    // Tab key - remove mouse-using class
+    if (e.key === 'Tab') {
+        document.body.classList.remove('using-mouse');
+    }
+
+    // Disable developer tools shortcuts
+    // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C
+    if (e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+        (e.ctrlKey && e.key === 'U')) {
+        e.preventDefault();
+        return false;
     }
 });
 
@@ -270,10 +310,10 @@ document.addEventListener('mousedown', () => {
     document.body.classList.add('using-mouse');
 });
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-        document.body.classList.remove('using-mouse');
-    }
+// Console warning
+window.addEventListener('load', () => {
+    console.log('%cWarning!', 'color: red; font-size: 40px; font-weight: bold;');
+    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here, it is likely a scam.', 'font-size: 16px;');
 });
 
 console.log('Will Spark Media - Website loaded successfully!');
